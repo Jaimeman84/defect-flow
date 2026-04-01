@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:playwright.dev)",
+      "Bash(npx playwright:*)",
+      "mcp__playwright-test__planner_setup_page",
+      "mcp__playwright-test__browser_navigate",
+      "mcp__playwright-test__planner_save_plan",
+      "mcp__playwright-test__generator_setup_page",
+      "mcp__playwright-test__generator_write_test",
+      "Bash(grep -n \"Evidence\\\\|Status History\\\\|ArrowLeft\\\\|back\" src/app/\\\\\\(app\\\\\\)/issues/[issueId]/page.tsx)",
+      "Bash(grep -n \"Header\\\\|title\\\\|project.name\" src/app/\\\\\\(app\\\\\\)/projects/[projectId]/page.tsx)",
+      "Bash(ls c:/Users/jaime/repos/defect-flow/*.ts c:/Users/jaime/repos/defect-flow/*.spec.ts)"
+    ]
+  }
+}

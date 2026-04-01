@@ -10,6 +10,7 @@ A bug and AI issue tracking tool built for QA teams. Supports a 6-stage bug life
 - **Styling:** Tailwind CSS + shadcn/ui
 - **Charts:** Recharts
 - **Forms:** React Hook Form + Zod
+- **Tests:** Playwright
 
 ## Getting Started
 
@@ -50,6 +51,39 @@ npx prisma db push --force-reset
 ```
 
 > **Note:** Stop the dev server before running either command to avoid file lock errors on Windows.
+
+## Testing
+
+Playwright is used for end-to-end testing. The dev server must be running before you run tests.
+
+```bash
+# Run all tests
+npx playwright test
+
+# Run a specific test file
+npx playwright test tests/happy-path.spec.ts
+
+# Open the HTML report after a run
+npx playwright show-report
+```
+
+The database is automatically wiped and re-seeded before every test run via `globalSetup`, so tests always start from a known state.
+
+### Test Suites
+
+| File | Coverage |
+|---|---|
+| `tests/happy-path.spec.ts` | Dashboard, issue list/filter/search, issue detail, create issue, projects |
+
+### Adding Tests
+
+Use the Playwright test agents built into Claude Code:
+
+- `/playwright-test-planner` — maps user flows and generates a test plan (`tests/test.plan.md`)
+- `/playwright-test-generator` — converts the plan into executable spec files
+- `/playwright-test-healer` — auto-fixes broken tests after UI changes
+
+The generator seed file is `seed.spec.ts` at the project root.
 
 ## Issue Lifecycle
 
@@ -105,6 +139,10 @@ src/
 │   └── formatters.ts    # Date and label helpers
 └── types/
     └── issue.types.ts   # Typed interfaces for Prisma results
+tests/
+├── happy-path.spec.ts   # Happy path E2E tests
+├── global-setup.ts      # Resets DB before every test run
+└── test.plan.md         # Full test plan (58 scenarios across 10 suites)
 ```
 
 ## Seed Data
