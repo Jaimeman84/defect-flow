@@ -2,6 +2,20 @@
 
 A bug and AI issue tracking tool built for QA teams. Supports a 6-stage bug lifecycle, evidence management, AI issue classification, and a dashboard with charts.
 
+## Screenshots
+
+### Dashboard
+![Dashboard](public/screenshots/dashboard.png)
+
+### Issue List
+![Issue List](public/screenshots/issues.png)
+
+### Issue Detail
+![Issue Detail](public/screenshots/issue-detail.png)
+
+### Projects
+![Projects](public/screenshots/projects.png)
+
 ## Tech Stack
 
 - **Framework:** Next.js 15 (App Router, React Server Components, Server Actions)
@@ -74,6 +88,10 @@ The database is automatically wiped and re-seeded before every test run via `glo
 | File | Coverage |
 |---|---|
 | `tests/happy-path.spec.ts` | Dashboard, issue list/filter/search, issue detail, create issue, projects |
+
+### Test Report
+
+![Playwright Report](public/screenshots/playwright-report.png)
 
 ### Adding Tests
 
