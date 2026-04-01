@@ -90,8 +90,10 @@ The database is automatically wiped and re-seeded before every test run via `glo
 
 ### Test Report
 
-![Playwright Agents](public/screenshots/playwright-agents.png)
-![Playwright Agents](public/screenshots/playwright-agents-report.png)
+<div align="center">
+  <img src="public/screenshots/playwright-agents.png" alt="Playwright Agents" />
+  <img src="public/screenshots/playwright-agents-report.png" alt="Playwright Agents Report" />
+</div>
 
 ### Adding Tests
 
