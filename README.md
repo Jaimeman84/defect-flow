@@ -4,8 +4,7 @@ A bug and AI issue tracking tool built for QA teams. Supports a 6-stage bug life
 
 ## Screenshots
 
-### Dashboard
-![Dashboard](public/screenshots/dashboard.png)
+![Defect Flow](public/screenshots/defect-flow.png)
 
 ### Issue List
 ![Issue List](public/screenshots/issues.png)
@@ -91,7 +90,7 @@ The database is automatically wiped and re-seeded before every test run via `glo
 
 ### Test Report
 
-![Playwright Report](public/screenshots/playwright-report.png)
+![Playwright Agents](public/screenshots/playwright-agents.png)
 
 ### Adding Tests
 
