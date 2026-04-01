@@ -91,6 +91,7 @@ The database is automatically wiped and re-seeded before every test run via `glo
 ### Test Report
 
 ![Playwright Agents](public/screenshots/playwright-agents.png)
+![Playwright Agents](public/screenshots/playwright-agents-report.png)
 
 ### Adding Tests
 
