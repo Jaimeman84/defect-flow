@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx prisma:*)",
+      "Bash(node -e \":*)",
+      "Bash(npx tsc:*)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\jaime\\repos\\defect-flow\\src\\app\\(app)\\issues\\[issueId]\\edit"
+    ]
+  }
+}

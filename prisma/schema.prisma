@@ -1,0 +1,156 @@
+// Defect Flow - Prisma Schema
+// SQLite for MVP; change provider to "postgresql" for Postgres/Supabase
+// Note: SQLite does not support native enums — fields use String with app-layer validation
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Models ───────────────────────────────────────────────────────────────────
+
+model Workspace {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String    @unique
+  projects  Project[]
+  users     User[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model User {
+  id          String    @id @default(cuid())
+  workspaceId String
+  name        String
+  email       String    @unique
+  avatarUrl   String?
+  role        String    @default("MEMBER") // ADMIN | MEMBER | VIEWER
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Project {
+  id          String    @id @default(cuid())
+  workspaceId String
+  name        String
+  slug        String
+  description String?
+  color       String    @default("#6366f1")
+  issues      Issue[]
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  archivedAt  DateTime?
+
+  @@unique([workspaceId, slug])
+}
+
+model Issue {
+  id               String          @id @default(cuid())
+  projectId        String
+  issueNumber      Int
+  title            String
+  description      String?
+  issueType        String          @default("BUG")
+  status           String          @default("NEW")
+  severity         String          @default("MEDIUM")
+  priority         String          @default("MEDIUM")
+  assigneeId       String?
+  reporterId       String?
+  environment      String?
+  stepsToReproduce String?
+  expectedResult   String?
+  actualResult     String?
+  aiIssueCategory  String?
+  project          Project         @relation(fields: [projectId], references: [id])
+  comments         Comment[]
+  attachments      Attachment[]
+  labels           LabelOnIssue[]
+  statusHistory    StatusHistory[]
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  deletedAt        DateTime?
+
+  @@unique([projectId, issueNumber])
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  issueId    String
+  authorId   String?
+  authorName String?
+  body       String
+  issue      Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Attachment {
+  id          String   @id @default(cuid())
+  issueId     String
+  type        String   // FILE | LINK | TEXT_NOTE
+  filename    String?
+  url         String?
+  storagePath String?
+  mimeType    String?
+  sizeBytes   Int?
+  textContent String?
+  title       String?
+  uploadedBy  String?
+  issue       Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+}
+
+model Label {
+  id        String         @id @default(cuid())
+  name      String         @unique
+  color     String         @default("#6366f1")
+  issues    LabelOnIssue[]
+  createdAt DateTime       @default(now())
+}
+
+model LabelOnIssue {
+  issueId   String
+  labelId   String
+  issue     Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  label     Label    @relation(fields: [labelId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([issueId, labelId])
+}
+
+model StatusHistory {
+  id         String   @id @default(cuid())
+  issueId    String
+  fromStatus String?
+  toStatus   String
+  changedBy  String?
+  note       String?
+  issue      Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+}
+
+// ─── Future extensibility models ──────────────────────────────────────────────
+
+model Environment {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  url         String?
+  createdAt   DateTime @default(now())
+}
+
+model TestSession {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  projectId   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
